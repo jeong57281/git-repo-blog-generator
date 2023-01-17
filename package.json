@@ -1,24 +1,19 @@
 {
-    "name": "gatsby-material-typescript-starter",
-    "description": "A simple starter using Typescript & Material-ui",
+    "name": "git-repo-blog-generator",
+    "description": "github repository 내 파일들을 이용하여 블로그를 생성해주는 node package",
     "version": "0.1.0",
-    "homepage": "https://gatsby-material-typescript-starter.vercel.app",
+    "homepage": "",
     "author": {
-        "name": "Christian Lindeneg",
-        "email": "hi@lindeneg.org",
-        "url": "https://lindeneg.org"
+        "name": "JeongHyeon Park",
+        "email": "jeong5728@gmail.com"
     },
     "keywords": [
         "gatsby",
-        "gatsby-plugin",
-        "typescript",
-        "eslint",
-        "prettier",
         "material-ui"
     ],
     "license": "(MIT OR 0BSD)",
     "bin": {
-        "algorepo": "./cli.js"
+        "grbgen": "./cli.js"
     },
     "scripts": {
         "build": "gatsby build --prefix-paths",
@@ -43,6 +38,7 @@
         "gatsby-plugin-offline": "^4.4.0",
         "gatsby-plugin-react-helmet": "^4.4.0",
         "gatsby-plugin-typescript": "^3.4.0",
+        "gatsby-source-filesystem": "^5.4.0",
         "git-repo-name": "^1.0.1",
         "pid-cwd": "^1.2.0",
         "react": "^17.0.2",
@@ -72,5 +68,8 @@
     },
     "bugs": {
         "url": "https://github.com/Lindeneg/gatsby-material-typescript-starter/issues"
+    },
+    "engines": {
+        "node": ">=18.0.0"
     }
 }
