@@ -32,7 +32,13 @@ const getCliPid = async () => {
 
 exports.onPreInit = async ({ actions, store }) => {
   const cliPid = await getCliPid();
-  const cliCwd = await pidCwd(cliPid);
+
+  /**
+   * cli 프로그램의 pid값이 1이라는 것은 cli 프로그램을 찾지 못하여
+   * 모든 프로세스의 공통 부모인 init 프로세의 pid 값이 반환된 경우이므로
+   * 현재 작업 디렉토리를 __dirname 로 설정
+   */
+  const cliCwd = cliPid === 1 ? __dirname : await pidCwd(cliPid);
 
   // 기존에 build된 데이터 삭제
   if (process.argv[2] === 'build') {
