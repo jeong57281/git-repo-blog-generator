@@ -2,6 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const pidCwd = require('pid-cwd');
 const find = require('find-process');
+const gitDateExtractor = require('git-date-extractor');
 
 const getCliPid = async () => {
   let parentPid = process.ppid;
@@ -55,12 +56,18 @@ exports.onPreInit = async ({ actions, store }) => {
     }
   }
 
-  // gatsby-config 내 플러그인 옵션 동적으로 수정
-  const { setPluginStatus } = actions;
+  /**
+   * gatsby-config.js 플러그인 옵션 동적으로 수정
+   */
+
+  let plugin;
 
   const state = store.getState();
 
-  const plugin = state.flattenedPlugins.find(
+  const { setPluginStatus } = actions;
+
+  // gatsby-source-filesystem 플러그인 옵션 수정
+  plugin = state.flattenedPlugins.find(
     (plugin) => plugin.name === 'gatsby-source-filesystem'
   );
 
@@ -68,6 +75,26 @@ exports.onPreInit = async ({ actions, store }) => {
     plugin.pluginOptions = {
       ...plugin.pluginOptions,
       ...{ path: cliCwd },
+    };
+
+    setPluginStatus({ pluginOptions: plugin.pluginOptions }, plugin);
+  }
+
+  // gatsby-plugin-global-context 플러그인 옵션 수정
+  plugin = state.flattenedPlugins.find(
+    (plugin) => plugin.name === 'gatsby-plugin-global-context'
+  );
+
+  if (plugin) {
+    const stamps = await gitDateExtractor.getStamps({
+      projectRootPath: cliCwd,
+    });
+
+    plugin.pluginOptions = {
+      ...plugin.pluginOptions,
+      context: {
+        stamps,
+      },
     };
 
     setPluginStatus({ pluginOptions: plugin.pluginOptions }, plugin);

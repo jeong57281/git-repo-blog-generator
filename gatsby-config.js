@@ -15,6 +15,12 @@ module.exports = {
     `gatsby-plugin-typescript`,
     `gatsby-plugin-react-helmet`,
     {
+      resolve: 'gatsby-plugin-global-context',
+      options: {
+        context: {},
+      },
+    },
+    {
       resolve: 'gatsby-source-filesystem',
       options: {
         path: __dirname,
