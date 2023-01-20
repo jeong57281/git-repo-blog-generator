@@ -10,7 +10,7 @@ module.exports = {
       github: `https://github.com/Lindeneg`,
     },
   },
-  pathPrefix: `${require('git-repo-name').sync()}/git-algo-repo-summary`,
+  pathPrefix: process.env.PREFIX_PATHS,
   plugins: [
     `gatsby-plugin-typescript`,
     `gatsby-plugin-react-helmet`,
@@ -24,7 +24,7 @@ module.exports = {
       resolve: 'gatsby-source-filesystem',
       options: {
         path: __dirname,
-        ignore: [`**/\.*`, `node_modules`, `public`],
+        ignore: [`**/\.*`, `node_modules`, `public`, `dist`],
       },
     },
     {

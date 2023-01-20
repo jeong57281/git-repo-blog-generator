@@ -2,15 +2,13 @@
 
 const find = require('find-process');
 const pidCwd = require('pid-cwd');
+const path = require('path');
 
 const CLI_NAME = 'grbgen';
 const INIT_PROCESS_PID = 1;
+const SWAPPER_PROCESS_PID = 0;
 
-/**
- * cli 프로그램을 찾을 수 없으면 init Process PID(1)를 반환한다.
- * @returns
- */
-const getCliPid = async () => {
+const getCliCwd = async () => {
   /** @type { number | undefined } */
   let parentPid = process.ppid;
 
@@ -32,16 +30,11 @@ const getCliPid = async () => {
     parentProcess.cmd.indexOf(CLI_NAME) === -1
   );
 
-  return parentPid;
-};
-
-const getCliCwd = async () => {
-  const cliPid = await getCliPid();
-
-  return cliPid === INIT_PROCESS_PID ? __dirname : await pidCwd(cliPid);
+  return parentPid === INIT_PROCESS_PID || parentPid === SWAPPER_PROCESS_PID
+    ? path.resolve(__dirname, '..', '..')
+    : await pidCwd(parentPid);
 };
 
 module.exports = {
-  getCliPid,
   getCliCwd,
 };
