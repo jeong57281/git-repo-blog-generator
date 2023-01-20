@@ -1,15 +1,19 @@
-const setPluginOptionsDynamically = (
-  actions: any,
-  store: any,
-  pluginName: string,
-  options: {}
-) => {
+// @ts-check
+
+/**
+ *
+ * @param {any} actions
+ * @param {any} store
+ * @param {string} pluginName
+ * @param {Object} options
+ */
+const setPluginOptionsDynamically = (actions, store, pluginName, options) => {
   const state = store.getState();
 
   const { setPluginStatus } = actions;
 
   const plugin = state.flattenedPlugins.find(
-    (plugin: any) => plugin.name === pluginName
+    (plugin) => plugin.name === pluginName
   );
 
   if (plugin) {

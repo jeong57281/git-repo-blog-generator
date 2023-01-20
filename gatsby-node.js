@@ -2,8 +2,8 @@ const fs = require('fs');
 const path = require('path');
 const gitDateExtractor = require('git-date-extractor');
 
-const { getCliCwd } = require('./src/util/process.ts');
-const { setPluginOptionsDynamically } = require('./src/util/gatsby.ts');
+const { getCliCwd } = require('./src/util/process.js');
+const { setPluginOptionsDynamically } = require('./src/util/gatsby.js');
 
 exports.onPreInit = async ({ actions, store }) => {
   const cliCwd = await getCliCwd();
