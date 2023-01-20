@@ -17,20 +17,17 @@ const getCliPid = async () => {
   /** @type { import('../types/index').findProcessReturnType | undefined } */
   let parentProcess;
 
-  /** @type { import('../types/index').findProcessReturnType[] } */
-  let parentProcessList;
+  do {
+    parentProcess = (await find('pid', parentPid))[0];
 
-  // prettier-ignore
-  for (
-    parentProcessList = await find('pid', parentPid),
-      parentProcess = parentProcessList[0]
-    ; parentPid && parentProcess && parentProcess.cmd.indexOf(CLI_NAME) === -1
-    ;
-  ) {
     parentPid = parentProcess.ppid;
-  }
+  } while (
+    parentPid &&
+    parentProcess &&
+    parentProcess.cmd.indexOf(CLI_NAME) === -1
+  );
 
-  return parentPid || INIT_PROCESS_PID;
+  return parentPid;
 };
 
 const getCliCwd = async () => {
