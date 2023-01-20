@@ -17,8 +17,13 @@ const getCliPid = async () => {
   /** @type { import('../types/index').findProcessReturnType | undefined } */
   let parentProcess;
 
+  /** @type { import('../types/index').findProcessReturnType[] } */
+  let parentProcessList;
+
   do {
-    parentProcess = (await find('pid', parentPid))[0];
+    parentProcessList = await find('pid', parentPid);
+
+    parentProcess = parentProcessList[0];
 
     parentPid = parentProcess.ppid;
   } while (
