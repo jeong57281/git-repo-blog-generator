@@ -1,4 +1,8 @@
+# gatsby build file
 .cache
+public
+dist
+
+# eslint & prettier
 .prettier*
 .eslint*
-README.md
