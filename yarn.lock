@@ -5757,6 +5757,11 @@ git-date-extractor@^4.0.1:
     meow "^7.0.1"
     walkdir "^0.4.1"
 
+git-repo-info@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/git-repo-info/-/git-repo-info-2.1.1.tgz#220ffed8cbae74ef8a80e3052f2ccb5179aed058"
+  integrity sha512-8aCohiDo4jwjOwma4FmYFd3i97urZulL8XL24nIPxuE+GZnfsAyy/g2Shqx6OjUiFKUXZM+Yy+KHnOmmA3FVcg==
+
 git-repo-name@^1.0.1:
   version "1.0.1"
   resolved "https://registry.npmjs.org/git-repo-name/-/git-repo-name-1.0.1.tgz"

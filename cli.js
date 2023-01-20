@@ -2,6 +2,16 @@
 
 const { spawn } = require('child_process');
 const chalk = require('chalk');
+const getRepoInfo = require('git-repo-info');
+
+const info = getRepoInfo();
+
+if (!info.commonGitDir) {
+  console.log(
+    `\n${chalk.bgRed(' ERROR ')}\n\n${chalk.yellow('.git')} not found\n`
+  );
+  process.exit(1);
+}
 
 if (process.argv[2] === 'build') {
   const buildCmd = spawn('gatsby', ['build', '--prefix-paths'], {
