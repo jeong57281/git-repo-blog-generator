@@ -10,29 +10,29 @@ const SWAPPER_PROCESS_PID = 0;
 
 const getCliCwd = async () => {
   /** @type { number | undefined } */
-  let parentPid = process.ppid;
+  let currentPid = process.pid;
 
   /** @type { import('../types/index').findProcessReturnType | undefined } */
-  let parentProcess;
+  let currentProcess;
 
   /** @type { import('../types/index').findProcessReturnType[] } */
-  let parentProcessList;
+  let currentProcessList;
 
   do {
-    parentProcessList = await find('pid', parentPid);
+    currentProcessList = await find('pid', currentPid);
 
-    parentProcess = parentProcessList[0];
+    currentProcess = currentProcessList[0];
 
-    parentPid = parentProcess.ppid;
+    currentPid = currentProcess.ppid;
   } while (
-    parentPid &&
-    parentProcess &&
-    parentProcess.cmd.indexOf(CLI_NAME) === -1
+    currentPid &&
+    currentProcess &&
+    currentProcess.cmd.indexOf(CLI_NAME) === -1
   );
 
-  return parentPid === INIT_PROCESS_PID || parentPid === SWAPPER_PROCESS_PID
+  return currentPid === INIT_PROCESS_PID || currentPid === SWAPPER_PROCESS_PID
     ? path.resolve(__dirname, '..', '..')
-    : await pidCwd(parentPid);
+    : await pidCwd(currentPid);
 };
 
 module.exports = {
