@@ -1,19 +1,19 @@
 #!/usr/bin/env node
 
 const { spawn } = require('child_process');
-const chalk = require('chalk');
 const getRepoInfo = require('git-repo-info')();
 const getRepoName = require('git-repo-name');
 const { getCliCwd } = require('./src/util/process.js');
+const { E_NO_GIT, E_NO_GATSBY_CLI, E_USAGE } = require('./src/constants');
 
+// .git을 찾을 수 없을 때
 if (!getRepoInfo.commonGitDir) {
-  console.log(
-    `\n${chalk.bgRed(' ERROR ')}\n\n${chalk.yellow('.git')} not found\n`
-  );
+  console.log(E_NO_GIT);
   process.exit(1);
 }
 
 (async () => {
+  // $ grbgen build
   if (process.argv[2] === 'build') {
     const cliCwd = await getCliCwd();
 
@@ -28,13 +28,14 @@ if (!getRepoInfo.commonGitDir) {
 
     buildCmd.on('error', (err) => {
       if (err.code === 'ENOENT') {
-        console.log(chalk.yellow('gatsby-cli'), 'not found');
+        console.log(E_NO_GATSBY_CLI);
       }
     });
 
     process.exit(0);
   }
 
+  // $ grbgen develop
   if (process.argv[2] === 'develop') {
     const devCmd = spawn('gatsby', ['develop'], {
       stdio: 'inherit',
@@ -43,14 +44,13 @@ if (!getRepoInfo.commonGitDir) {
 
     devCmd.on('error', (err) => {
       if (err.code === 'ENOENT') {
-        console.log(chalk.yellow('gatsby-cli'), 'not found');
+        console.log(E_NO_GATSBY_CLI);
       }
     });
 
     process.exit(0);
   }
 
-  console.log(
-    `\nusage: $ ${chalk.yellow('grbgen')} build ${chalk.gray('or')} develop\n`
-  );
+  // 잘못된 사용
+  console.log(E_USAGE);
 })();

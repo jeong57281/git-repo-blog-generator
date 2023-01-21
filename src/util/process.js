@@ -3,10 +3,11 @@
 const find = require('find-process');
 const pidCwd = require('pid-cwd');
 const path = require('path');
-
-const CLI_NAME = 'grbgen';
-const INIT_PROCESS_PID = 1;
-const SWAPPER_PROCESS_PID = 0;
+const {
+  CLI_NAME,
+  INIT_PROCESS_PID,
+  SWAPPER_PROCESS_PID,
+} = require('../constants');
 
 const getCliCwd = async () => {
   /** @type { number | undefined } */
