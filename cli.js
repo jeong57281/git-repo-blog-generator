@@ -31,12 +31,9 @@ if (!getRepoInfo.commonGitDir) {
         console.log(E_NO_GATSBY_CLI);
       }
     });
-
-    process.exit(0);
   }
-
   // $ grbgen develop
-  if (process.argv[2] === 'develop') {
+  else if (process.argv[2] === 'develop') {
     const devCmd = spawn('gatsby', ['develop'], {
       stdio: 'inherit',
       cwd: __dirname,
@@ -47,10 +44,9 @@ if (!getRepoInfo.commonGitDir) {
         console.log(E_NO_GATSBY_CLI);
       }
     });
-
-    process.exit(0);
   }
-
   // 잘못된 사용
-  console.log(E_USAGE);
+  else {
+    console.log(E_USAGE);
+  }
 })();
