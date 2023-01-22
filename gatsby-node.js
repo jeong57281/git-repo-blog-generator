@@ -39,6 +39,11 @@ exports.onCreateWebpackConfig = ({ actions, loaders, getConfig }) => {
 };
 
 exports.onPreInit = async ({ actions, store }) => {
+  /**
+   * cli 프로그램에서 cli 프로그램의 cwd를 구해 환경변수로 넘겨주는 방법을 사용하지 않고,
+   * gatsby-node.js 에서도 한번 더 직접 구해주는 이유는
+   * 직접 gatsby-cli를 이용하여 개발할 때 쉬운 처리를 위해서이다.
+   */
   const cliCwd = await getCliCwd();
 
   // 기존에 build된 데이터 삭제
