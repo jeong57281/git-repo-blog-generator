@@ -1,7 +1,7 @@
 {
     "name": "git-repo-blog-generator",
     "description": "github repository 내 파일들을 이용하여 블로그를 생성해주는 node package",
-    "version": "0.1.4",
+    "version": "0.1.5",
     "homepage": "",
     "author": {
         "name": "JeongHyeon Park",
