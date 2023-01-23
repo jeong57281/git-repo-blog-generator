@@ -17,7 +17,7 @@ if (!getRepoInfo.commonGitDir) {
   if (process.argv[2] === 'build') {
     const cliCwd = await getCliCwd();
 
-    const buildCmd = spawn('gatsby', ['build', '--prefix-paths'], {
+    const buildCmd = spawn('./node_modules/.bin/gatsby', ['build', '--prefix-paths'], {
       stdio: 'inherit',
       cwd: __dirname,
       env: {
@@ -34,7 +34,7 @@ if (!getRepoInfo.commonGitDir) {
   }
   // $ grbgen develop
   else if (process.argv[2] === 'develop') {
-    const devCmd = spawn('gatsby', ['develop'], {
+    const devCmd = spawn('./node_modules/.bin/gatsby', ['develop'], {
       stdio: 'inherit',
       cwd: __dirname,
     });

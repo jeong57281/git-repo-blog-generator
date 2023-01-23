@@ -1,13 +1,5 @@
 # git-repo-blog-generator
 
-## Pre-Installed
-
-```bash
-$ npm i -g gatsby-cli
-```
-
-gatsby 프레임워크를 이용해서 웹 페이지를 생성하므로 `gatsby-cli`가 필수적으로 필요합니다.
-
 ## Install
 
 ```bash
