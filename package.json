@@ -68,10 +68,10 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/Lindeneg/gatsby-material-typescript-starter"
+        "url": "https://github.com/jeong57281/git-repo-blog-generator"
     },
     "bugs": {
-        "url": "https://github.com/Lindeneg/gatsby-material-typescript-starter/issues"
+        "url": "https://github.com/jeong57281/git-repo-blog-generator/issues"
     },
     "engines": {
         "node": ">=18.0.0"
