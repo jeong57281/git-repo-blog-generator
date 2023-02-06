@@ -1,14 +1,12 @@
 {
   "compilerOptions": {
-    "target": "esnext",
+    "target": "ESNext",
 
-    "lib": ["dom", "esnext"],
-
-    "jsx": "react",
-
-    "module": "esnext",
+    "module": "CommonJS",
 
     "moduleResolution": "node",
+
+    "outDir": ".",
 
     "esModuleInterop": true,
 
@@ -19,5 +17,5 @@
     "skipLibCheck": true
   },
 
-  "include": ["./src/**/*"]
+  "include": ["../src/bin", "../src/constants,", "../src/utils"]
 }

@@ -1,58 +1,58 @@
-import React from 'react';
-import { graphql, Link as GatsbyLink } from 'gatsby';
-import { Grid, Button, Theme } from '@material-ui/core';
-import { makeStyles } from '@material-ui/styles';
+import * as React from 'react';
+import { graphql, PageProps } from 'gatsby';
 
-import { Seo, Hero, Lazy } from '../components';
-import { FC } from '../util';
+// You can also use https://github.com/dotansimha/graphql-code-generator
+// to generate types from a GraphQL schema
+interface IndexPageProps {
+  site: {
+    siteMetadata: {
+      siteName: string;
+      sourceUrl: string;
+    };
+  };
+  allFile: {
+    edges: {
+      node: {
+        name: string;
+        relativePath: string;
+      };
+    };
+  };
+  pageContext: any;
+}
 
-const useStyles = makeStyles((theme: Theme) => ({
-  heroButtons: {
-    marginTop: theme.spacing(4),
-  },
-}));
-
-const IndexPage: FC = ({ pageContext, data }) => {
+const Index = ({
+  pageContext,
+  data: { site, allFile },
+}: PageProps<IndexPageProps>) => {
   console.log('page context', pageContext);
-  console.log('graph ql data', data);
-
-  const styles = useStyles();
+  console.log('graph ql filesystem', allFile);
 
   return (
-    <>
-      <Seo title="Home" />
-      <Lazy type="grow" delay={500} timeout={1000} mountOnEnter unmountOnExit>
-        <Hero
-          title="Hi people"
-          description="Welcome to your new Gatsby site. Now go build something great with
-          Typescript and Material-ui."
-        >
-          <div className={styles.heroButtons}>
-            <Grid container spacing={2} justify="center">
-              <Grid item>
-                <Lazy type="slide" direction="left" delay={500}>
-                  <Button
-                    component={GatsbyLink}
-                    to="/page-two/"
-                    variant="contained"
-                    color="primary"
-                  >
-                    Go to page 2
-                  </Button>
-                </Lazy>
-              </Grid>
-            </Grid>
-          </div>
-        </Hero>
-      </Lazy>
-    </>
+    <main>
+      <h1>{site.siteMetadata.siteName}</h1>
+      <p className="custom-text">
+        This example is hosted on{' '}
+        <a href={site.siteMetadata.sourceUrl}>GitHub</a>. Continue reading{' '}
+        <a href="https://www.gatsbyjs.com/docs/how-to/custom-configuration/typescript/">
+          TypeScript and Gatsby documentation
+        </a>{' '}
+        to learn more.
+      </p>
+    </main>
   );
 };
 
-export default IndexPage;
+export default Index;
 
-export const query = graphql`
-  query {
+export const pageQuery = graphql`
+  query IndexQuery {
+    site {
+      siteMetadata {
+        siteName
+        sourceUrl
+      }
+    }
     allFile {
       edges {
         node {
