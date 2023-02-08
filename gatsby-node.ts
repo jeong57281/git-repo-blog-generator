@@ -1,10 +1,94 @@
 import fs from 'fs';
 import path from 'path';
 import gitDateExtractor from 'git-date-extractor';
+import { createFilePath } from 'gatsby-source-filesystem';
+import type {
+  CreatePagesArgs,
+  CreateNodeArgs,
+  CreateWebpackConfigArgs,
+  PreInitArgs,
+} from 'gatsby';
+import get from 'lodash/get';
 
 import { getCliCwd, setPluginOptionsDynamically } from './src/utils';
 
-export const onCreateWebpackConfig = ({ actions, loaders, getConfig }) => {
+export const onCreateNode = async ({
+  node,
+  actions,
+  getNode,
+  loadNodeContent,
+}: CreateNodeArgs) => {
+  const { createNodeField } = actions;
+
+  if (node.internal.type === 'MarkdownRemark') {
+    let slug = createFilePath({ node, getNode, trailingSlash: false }); // slug is relativePath
+
+    if (slug[0] === '/') {
+      slug = slug.slice(1);
+    }
+
+    createNodeField({ node, name: 'slug', value: slug });
+  }
+
+  if (node.internal.type === 'File') {
+    const content = await loadNodeContent(node);
+
+    createNodeField({
+      node,
+      name: 'content',
+      value: content,
+    });
+  }
+};
+
+interface FileNodeType {
+  node: {
+    relativePath: string;
+    relativeDirectory: string;
+    name: string;
+  };
+}
+
+export const createPages = async ({ graphql, actions }: CreatePagesArgs) => {
+  const { createPage } = actions;
+
+  const result = await graphql(`
+    query {
+      allFile(filter: { ext: { ne: ".md" } }) {
+        edges {
+          node {
+            relativePath
+            relativeDirectory
+            name
+          }
+        }
+      }
+    }
+  `);
+
+  const edges = get(result, 'data.allFile.edges', []);
+
+  edges.forEach((value: FileNodeType) => {
+    const node = value.node;
+
+    const { relativePath, relativeDirectory, name } = node;
+
+    createPage({
+      path: path.join('post', relativeDirectory, name),
+      component: path.resolve('./src/pages/post.tsx'),
+      context: {
+        slug: relativePath,
+        slugNoExt: path.join(relativeDirectory, name),
+      },
+    });
+  });
+};
+
+export const onCreateWebpackConfig = ({
+  actions,
+  loaders,
+  getConfig,
+}: CreateWebpackConfigArgs) => {
   const config = getConfig();
 
   /**
@@ -37,7 +121,7 @@ export const onCreateWebpackConfig = ({ actions, loaders, getConfig }) => {
   actions.replaceWebpackConfig(config);
 };
 
-export const onPreInit = async ({ actions, store }) => {
+export const onPreInit = async ({ actions, store }: PreInitArgs) => {
   /**
    * cli 프로그램에서 cli 프로그램의 cwd를 구해 환경변수로 넘겨주는 방법을 사용하지 않고,
    * gatsby-node.js 에서도 한번 더 직접 구해주는 이유는
