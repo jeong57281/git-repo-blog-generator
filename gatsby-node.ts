@@ -21,7 +21,11 @@ export const onCreateNode = async ({
   const { createNodeField } = actions;
 
   if (node.internal.type === 'MarkdownRemark') {
-    let slug = createFilePath({ node, getNode, trailingSlash: false }); // slug is relativePath
+    /**
+     * slug 는 relativePath 이고,
+     * createFilePath 로 생성된 경로는 '/'로 시작하고 파일 확장자가 생략되어 있는 형태임
+     */
+    let slug = createFilePath({ node, getNode, trailingSlash: false });
 
     if (slug[0] === '/') {
       slug = slug.slice(1);
