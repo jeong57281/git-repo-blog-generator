@@ -1,6 +1,8 @@
+import type { Actions, Store } from 'gatsby';
+
 export const setPluginOptionsDynamically = (
-  actions: any,
-  store: any,
+  actions: Actions,
+  store: Store,
   pluginName: string,
   options: Object
 ) => {
