@@ -20,6 +20,7 @@ const gatsbyBuild = async () => {
     env: {
       ...process.env,
       PREFIX_PATHS: `/${getRepoName.sync(cliCwd)}/dist`,
+      CLI_CWD: cliCwd,
     },
   });
 
