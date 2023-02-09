@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import type { StampObject } from 'git-date-extractor/dist/types';
 import gitDateExtractor from 'git-date-extractor';
 import { createFilePath } from 'gatsby-source-filesystem';
 import type {
@@ -12,6 +13,53 @@ import get from 'lodash/get';
 import { getCliCwd, setPluginOptionsDynamically } from './src/utils';
 
 let cliCwd: string | undefined = process.env.CLI_CWD;
+
+let stamps: Map<string, StampObject> | null = null;
+
+export const onPreInit = async ({ actions, store }: PreInitArgs) => {
+  if (!cliCwd) {
+    cliCwd = await getCliCwd();
+  }
+
+  // 기존에 build된 데이터 삭제
+  if (process.argv[2] === 'build') {
+    const publicPath = path.join(__dirname, 'public');
+
+    if (fs.existsSync(publicPath)) {
+      fs.rmSync(publicPath, { force: true, recursive: true });
+    }
+
+    const distPath = path.join(cliCwd, 'dist');
+
+    if (fs.existsSync(distPath)) {
+      fs.rmSync(distPath, { force: true, recursive: true });
+    }
+  }
+
+  // gatsby-config.js 플러그인 옵션 동적으로 수정
+  setPluginOptionsDynamically(actions, store, 'gatsby-source-filesystem', {
+    path: cliCwd,
+  });
+
+  // git이 추적하는 모든 파일의 생성/수정 정보를 가져와 저장
+  if (!stamps) {
+    stamps = new Map(
+      Object.entries(
+        await gitDateExtractor.getStamps({
+          projectRootPath: cliCwd,
+        })
+      )
+    );
+  }
+};
+
+export const onPostBuild = async () => {
+  const publicPath = path.join(__dirname, 'public');
+  const distPath = path.join(cliCwd || __dirname, 'dist');
+
+  // build된 폴더(pubilc) 이름 변경하여 경로 이동
+  fs.renameSync(publicPath, distPath);
+};
 
 export const onCreateNode = async ({
   node,
@@ -36,6 +84,18 @@ export const onCreateNode = async ({
   }
 
   if (node.internal.type === 'File') {
+    if (typeof node.relativePath === 'string') {
+      const stampObject = stamps?.get(node.relativePath);
+
+      if (stampObject) {
+        createNodeField({
+          node,
+          name: 'stampObject',
+          value: stampObject,
+        });
+      }
+    }
+
     const content = await loadNodeContent(node);
 
     createNodeField({
@@ -124,46 +184,4 @@ export const onCreateWebpackConfig = ({
   ];
 
   actions.replaceWebpackConfig(config);
-};
-
-export const onPreInit = async ({ actions, store }: PreInitArgs) => {
-  if (!cliCwd) {
-    cliCwd = await getCliCwd();
-  }
-
-  // 기존에 build된 데이터 삭제
-  if (process.argv[2] === 'build') {
-    const publicPath = path.join(__dirname, 'public');
-
-    if (fs.existsSync(publicPath)) {
-      fs.rmSync(publicPath, { force: true, recursive: true });
-    }
-
-    const distPath = path.join(cliCwd, 'dist');
-
-    if (fs.existsSync(distPath)) {
-      fs.rmSync(distPath, { force: true, recursive: true });
-    }
-  }
-
-  // gatsby-config.js 플러그인 옵션 동적으로 수정
-  setPluginOptionsDynamically(actions, store, 'gatsby-source-filesystem', {
-    path: cliCwd,
-  });
-
-  setPluginOptionsDynamically(actions, store, 'gatsby-plugin-global-context', {
-    context: {
-      stamps: await gitDateExtractor.getStamps({
-        projectRootPath: cliCwd,
-      }),
-    },
-  });
-};
-
-export const onPostBuild = async () => {
-  const publicPath = path.join(__dirname, 'public');
-  const distPath = path.join(cliCwd || __dirname, 'dist');
-
-  // build된 폴더(pubilc) 이름 변경하여 경로 이동
-  fs.renameSync(publicPath, distPath);
 };

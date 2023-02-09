@@ -14,6 +14,10 @@ export const query = graphql`
     file(relativePath: { eq: $slug }) {
       fields {
         content
+        stampObject {
+          modified
+          created
+        }
       }
     }
     markdownRemark(fields: { slug: { eq: $slugNoExt } }) {

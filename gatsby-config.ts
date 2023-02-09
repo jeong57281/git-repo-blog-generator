@@ -29,12 +29,6 @@ const config: GatsbyConfig = {
         ],
       },
     },
-    {
-      resolve: 'gatsby-plugin-global-context',
-      options: {
-        context: {},
-      },
-    },
   ],
 };
 
