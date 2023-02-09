@@ -9,7 +9,7 @@ const Post = (props: any) => {
 
 export default Post;
 
-export const pageQuery = graphql`
+export const query = graphql`
   query ($slug: String!, $slugNoExt: String!) {
     file(relativePath: { eq: $slug }) {
       fields {

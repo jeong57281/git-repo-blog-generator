@@ -79,7 +79,7 @@ export const createPages = async ({ graphql, actions }: CreatePagesArgs) => {
 
     createPage({
       path: path.join('post', relativeDirectory, name),
-      component: path.resolve('./src/pages/post.tsx'),
+      component: path.resolve('./src/templates/post.tsx'),
       context: {
         slug: relativePath,
         slugNoExt: path.join(relativeDirectory, name),
