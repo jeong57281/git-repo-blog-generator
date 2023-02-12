@@ -29,10 +29,10 @@ export const onPreInit = async ({ actions, store }: PreInitArgs) => {
       fs.rmSync(publicPath, { force: true, recursive: true });
     }
 
-    const distPath = path.join(cliCwd, 'dist');
+    const docsPath = path.join(cliCwd, 'docs');
 
-    if (fs.existsSync(distPath)) {
-      fs.rmSync(distPath, { force: true, recursive: true });
+    if (fs.existsSync(docsPath)) {
+      fs.rmSync(docsPath, { force: true, recursive: true });
     }
   }
 
@@ -55,10 +55,10 @@ export const onPreInit = async ({ actions, store }: PreInitArgs) => {
 
 export const onPostBuild = async () => {
   const publicPath = path.join(__dirname, 'public');
-  const distPath = path.join(cliCwd || __dirname, 'dist');
+  const docsPath = path.join(cliCwd || __dirname, 'docs');
 
   // build된 폴더(pubilc) 이름 변경하여 경로 이동
-  fs.renameSync(publicPath, distPath);
+  fs.renameSync(publicPath, docsPath);
 };
 
 export const onCreateNode = async ({
