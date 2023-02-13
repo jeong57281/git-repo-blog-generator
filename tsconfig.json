@@ -16,7 +16,17 @@
 
     "strict": true,
 
-    "skipLibCheck": true
+    "skipLibCheck": true,
+
+    "paths": {
+      "@assets/*": ["./src/assets/*"],
+      "@components/*": ["./src/components/*"],
+      "@hooks/*": ["./src/hooks/*"],
+      "@constants": ["./src/constants"],
+      "@store": ["./src/store"],
+      "@utils": ["./src/utils"],
+      "@styles": ["./src/styles"]
+    }
   },
 
   "include": ["./src/**/*"]

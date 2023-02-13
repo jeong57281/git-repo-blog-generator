@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { mixin } from '../../styles';
+import { mixin } from '@styles';
 
 interface MenuButtonLayoutProps {
   isOpen: boolean;

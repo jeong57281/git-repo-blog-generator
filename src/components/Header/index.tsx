@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { HeaderLayout, HeaderSideBox, HeaderParagraph } from './Styles';
-import MenuButton from '../MenuButton';
+import MenuButton from '@components/MenuButton';
 
 const Header: React.FC = () => {
   const [isMenuOpen, setMenuOpen] = useState(false);

@@ -1,5 +1,5 @@
 import fs from 'fs';
-import path from 'path';
+import { join, resolve } from 'path';
 import type { StampObject } from 'git-date-extractor/dist/types';
 import gitDateExtractor from 'git-date-extractor';
 import { createFilePath } from 'gatsby-source-filesystem';
@@ -23,13 +23,13 @@ export const onPreInit = async ({ actions, store }: PreInitArgs) => {
 
   // 기존에 build된 데이터 삭제
   if (process.argv[2] === 'build') {
-    const publicPath = path.join(__dirname, 'public');
+    const publicPath = join(__dirname, 'public');
 
     if (fs.existsSync(publicPath)) {
       fs.rmSync(publicPath, { force: true, recursive: true });
     }
 
-    const docsPath = path.join(cliCwd, 'docs');
+    const docsPath = join(cliCwd, 'docs');
 
     if (fs.existsSync(docsPath)) {
       fs.rmSync(docsPath, { force: true, recursive: true });
@@ -54,8 +54,8 @@ export const onPreInit = async ({ actions, store }: PreInitArgs) => {
 };
 
 export const onPostBuild = async () => {
-  const publicPath = path.join(__dirname, 'public');
-  const docsPath = path.join(cliCwd || __dirname, 'docs');
+  const publicPath = join(__dirname, 'public');
+  const docsPath = join(cliCwd || __dirname, 'docs');
 
   // build된 폴더(pubilc) 이름 변경하여 경로 이동
   fs.renameSync(publicPath, docsPath);
@@ -139,11 +139,11 @@ export const createPages = async ({ graphql, actions }: CreatePagesArgs) => {
     const { relativePath, relativeDirectory, name } = node;
 
     createPage({
-      path: path.join('post', relativeDirectory, name),
-      component: path.resolve('./src/templates/post.tsx'),
+      path: join('post', relativeDirectory, name),
+      component: resolve('./src/templates/post.tsx'),
       context: {
         slug: relativePath,
-        slugNoExt: path.join(relativeDirectory, name),
+        slugNoExt: join(relativeDirectory, name),
       },
     });
   });
@@ -155,6 +155,18 @@ export const onCreateWebpackConfig = ({
   getConfig,
 }: CreateWebpackConfigArgs) => {
   const config = getConfig();
+
+  // 절대경로 Webpack 설정
+  config.resolve.alias = {
+    ...config.resolve.alias,
+    '@assets': resolve(__dirname, 'src/assets'),
+    '@components': resolve(__dirname, 'src/components'),
+    '@hooks': resolve(__dirname, 'src/hooks'),
+    '@constants': resolve(__dirname, 'src/constants'),
+    '@store': resolve(__dirname, 'src/store'),
+    '@utils': resolve(__dirname, 'src/utils'),
+    '@styles': resolve(__dirname, 'src/styles'),
+  };
 
   /**
    * 해당 패키지는 패키지에 포함된 소스와 gatsby를 이용하여 빌드하기 때문에

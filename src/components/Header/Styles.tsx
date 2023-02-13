@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { color, size, mixin } from '../../styles';
+import { color, size, mixin } from '@styles';
 
 export const HeaderLayout = styled.div`
   position: absolute;
