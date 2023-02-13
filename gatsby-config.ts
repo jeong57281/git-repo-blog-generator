@@ -29,6 +29,12 @@ const config: GatsbyConfig = {
         ],
       },
     },
+    {
+      resolve: `gatsby-plugin-layout`,
+      options: {
+        component: `${__dirname}/src/components/layout`,
+      },
+    },
   ],
 };
 

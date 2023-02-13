@@ -23,6 +23,7 @@
     "child_process": "^1.0.2",
     "find-process": "^1.4.7",
     "gatsby": "next",
+    "gatsby-plugin-layout": "^4.6.0",
     "gatsby-remark-katex": "^7.5.0",
     "gatsby-source-filesystem": "^5.5.0",
     "gatsby-transformer-remark": "^6.5.0",
