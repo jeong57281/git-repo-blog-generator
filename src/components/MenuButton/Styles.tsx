@@ -11,15 +11,15 @@ export const MenuButtonLayout = styled.div<MenuButtonLayoutProps>`
   background: none;
   display: flex;
   flex-direction: column;
-  width: 1.5em;
-  height: 1.2em;
+  width: 1.5rem;
+  height: 1.2rem;
   cursor: pointer;
   > div {
     position: absolute;
     left: 0;
     width: 100%;
     height: 20%;
-    border-radius: 3px;
+    border-radius: 0.1875rem;
     background-color: white;
     transition: transform 0.2s;
     &:nth-child(1) {
