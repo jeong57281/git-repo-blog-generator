@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { graphql } from 'gatsby';
 
-const Post = (props: any) => {
+function Post(props: any) {
   console.log(props);
 
   return <div>Post page</div>;
-};
+}
 
 export default Post;
 

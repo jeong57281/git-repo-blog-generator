@@ -6,14 +6,14 @@ interface MenuButtonProps {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const MenuButton: React.FC<MenuButtonProps> = ({ isOpen, setIsOpen }) => {
+function MenuButton({ isOpen, setIsOpen }: MenuButtonProps) {
   return (
     <MenuButtonLayout isOpen={isOpen} onClick={() => setIsOpen(!isOpen)}>
-      <div></div>
-      <div></div>
-      <div></div>
+      <div />
+      <div />
+      <div />
     </MenuButtonLayout>
   );
-};
+}
 
 export default MenuButton;

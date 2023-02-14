@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { HeaderLayout, HeaderSideBox, HeaderParagraph } from './Styles';
 import MenuButton from '@components/MenuButton';
+import { HeaderLayout, HeaderSideBox, HeaderParagraph } from './Styles';
 
-const Header: React.FC = () => {
+function Header() {
   const [isMenuOpen, setMenuOpen] = useState(false);
 
   return (
@@ -14,6 +14,6 @@ const Header: React.FC = () => {
       <HeaderSideBox />
     </HeaderLayout>
   );
-};
+}
 
 export default Header;

@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { graphql, PageProps } from 'gatsby';
 
-// You can also use https://github.com/dotansimha/graphql-code-generator
-// to generate types from a GraphQL schema
 interface IndexPageProps {
   site: {
     siteMetadata: {
@@ -21,10 +19,10 @@ interface IndexPageProps {
   pageContext: any;
 }
 
-const Index = ({
+function Index({
   pageContext,
   data: { site, allFile },
-}: PageProps<IndexPageProps>) => {
+}: PageProps<IndexPageProps>) {
   console.log('page context', pageContext);
   console.log('graph ql filesystem', allFile);
 
@@ -41,7 +39,7 @@ const Index = ({
       </p>
     </main>
   );
-};
+}
 
 export default Index;
 

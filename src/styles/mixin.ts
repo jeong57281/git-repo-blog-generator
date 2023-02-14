@@ -6,7 +6,7 @@ export const flexMiddle = css`
   align-items: center;
 `;
 
-export const fadeOut = (duration: number = 1, delay: number = 0) => css`
+export const fadeOut = (duration = 1, delay = 0) => css`
   @-webkit-keyframes fadeOut {
     0% {
       opacity: 1;
@@ -29,7 +29,7 @@ export const fadeOut = (duration: number = 1, delay: number = 0) => css`
   animation: fadeOut ${duration}s ease-out ${delay}s both;
 `;
 
-export const fadeIn = (duration: number = 1, delay: number = 0) => css`
+export const fadeIn = (duration = 1, delay = 0) => css`
   @-webkit-keyframes fadeIn {
     0% {
       opacity: 0;

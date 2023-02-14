@@ -1,12 +1,8 @@
-import * as React from 'react';
+import React from 'react';
 import Header from '@components/Header';
 import { GlobalStyle } from './Styles';
 
-interface LayoutProps {
-  children: React.ReactNode;
-}
-
-const Layout: React.FC<LayoutProps> = ({ children }) => {
+function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <GlobalStyle />
@@ -14,6 +10,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       {children}
     </>
   );
-};
+}
 
 export default Layout;

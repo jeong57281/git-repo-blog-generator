@@ -13,7 +13,7 @@ const config: GatsbyConfig = {
       resolve: 'gatsby-source-filesystem',
       options: {
         path: __dirname,
-        ignore: [`**/\.*`, `node_modules`, `public`, `docs`],
+        ignore: [`**/.*`, `node_modules`, `public`, `docs`],
       },
     },
     {
