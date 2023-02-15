@@ -11,6 +11,7 @@ import type {
 } from 'gatsby';
 import get from 'lodash/get';
 import { getCliCwd, setPluginOptionsDynamically } from './src/utils';
+import { CLI_PROCESS_NAME } from './src/constants';
 
 let cliCwd: string | undefined = process.env.CLI_CWD;
 
@@ -18,7 +19,7 @@ let stamps: Map<string, StampObject> | null = null;
 
 export const onPreInit = async ({ actions, store }: PreInitArgs) => {
   if (!cliCwd) {
-    cliCwd = await getCliCwd();
+    cliCwd = await getCliCwd(CLI_PROCESS_NAME);
   }
 
   // 기존에 build된 데이터 삭제
@@ -134,7 +135,7 @@ export const createPages = async ({ graphql, actions }: CreatePagesArgs) => {
   const edges = get(result, 'data.allFile.edges', []);
 
   edges.forEach((value: FileNodeType) => {
-    const node = value.node;
+    const { node } = value;
 
     const { relativePath, relativeDirectory, name } = node;
 
@@ -178,20 +179,27 @@ export const onCreateWebpackConfig = ({
    *
    * webpack config를 수정하여 .cache 내의 파일들도 transpiling 되도록 한다.
    */
+
+  const testRegExp = /\.(js|mjs|jsx)$/;
+
+  const newTestRule = {
+    test: testRegExp,
+    exclude: (modulePath) => {
+      if (/\.cache/.test(modulePath)) {
+        return false;
+      }
+
+      return /node_modules/.test(modulePath);
+    },
+  };
+
   config.module.rules = [
     ...config.module.rules.filter(
-      (rule) => String(rule.test) !== String(/\.(js|mjs|jsx)$/)
+      (rule) => String(rule.test) !== String(testRegExp)
     ),
     {
       ...loaders.js(),
-      test: /\.(js|mjs|jsx)$/,
-      exclude: function (modulePath) {
-        if (/\.cache/.test(modulePath)) {
-          return false;
-        }
-
-        return /node_modules/.test(modulePath);
-      },
+      ...newTestRule,
     },
   ];
 

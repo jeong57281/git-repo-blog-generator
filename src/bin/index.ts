@@ -3,16 +3,22 @@
 import path from 'path';
 import { spawn } from 'child_process';
 import getRepoInfo from 'git-repo-info';
-const getRepoName = require('git-repo-name');
 
-import { E_NO_GIT, E_NO_GATSBY_CLI, E_USAGE } from '../constants';
+import {
+  E_NO_GIT,
+  E_NO_GATSBY_CLI,
+  E_USAGE,
+  CLI_PROCESS_NAME,
+} from '../constants';
 import { getCliCwd } from '../utils';
+
+const getRepoName = require('git-repo-name');
 
 const rootPath = path.resolve(__dirname, '..', '..');
 const gatsbyCliPath = path.resolve(rootPath, 'node_modules', '.bin', 'gatsby');
 
 const gatsbyBuild = async () => {
-  const cliCwd = await getCliCwd();
+  const cliCwd = await getCliCwd(CLI_PROCESS_NAME);
 
   const buildCmd = spawn(gatsbyCliPath, ['build', '--prefix-paths'], {
     stdio: 'inherit',
