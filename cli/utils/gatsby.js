@@ -4,7 +4,7 @@ exports.setPluginOptionsDynamically = void 0;
 const setPluginOptionsDynamically = (actions, store, pluginName, options) => {
     const state = store.getState();
     const { setPluginStatus } = actions;
-    const plugin = state.flattenedPlugins.find((plugin) => plugin.name === pluginName);
+    const plugin = state.flattenedPlugins.find((item) => item.name === pluginName);
     if (plugin) {
         plugin.pluginOptions = {
             ...plugin.pluginOptions,

@@ -14,7 +14,5 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CLI_NAME = void 0;
 __exportStar(require("./error"), exports);
 __exportStar(require("./process"), exports);
-exports.CLI_NAME = 'grbgen';
