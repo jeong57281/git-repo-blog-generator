@@ -1,4 +1,5 @@
-import { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
+import { color, size } from '@styles';
 
 export const GlobalStyle = createGlobalStyle`
   :root {
@@ -7,5 +8,22 @@ export const GlobalStyle = createGlobalStyle`
 
   body {
     margin: 0;
+  }
+`;
+
+export const LayoutMain = styled.main`
+  min-height: 100vh;
+  background: ${color.BACKGROUND};
+  display: flex;
+  justify-content: center;
+`;
+
+export const LayoutMainContentsBox = styled.div`
+  width: 100%;
+  max-width: 900px;
+  margin: calc(${size.HEADER_HEIGHT} * 2) 0;
+
+  @media (max-width: ${size.BREAKPOINT_TABLET}) {
+    width: 95%;
   }
 `;

@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '@components/Header';
 import Footer from '@components/Footer';
-import { GlobalStyle } from './Styles';
+import { GlobalStyle, LayoutMain, LayoutMainContentsBox } from './Styles';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -15,7 +15,9 @@ function Layout({ children, pageContext }: LayoutProps) {
     <>
       <GlobalStyle />
       <Header repoName={pageContext.repoName} />
-      {children}
+      <LayoutMain>
+        <LayoutMainContentsBox>{children}</LayoutMainContentsBox>
+      </LayoutMain>
       <Footer />
     </>
   );
