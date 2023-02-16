@@ -4,6 +4,9 @@ import { color } from '@styles';
 export const FooterLayout = styled.footer`
   width: 100%;
   background-color: ${color.PRIMARY};
+`;
+
+export const FooterContentsBox = styled.div`
   padding: 4rem 8rem;
 `;
 

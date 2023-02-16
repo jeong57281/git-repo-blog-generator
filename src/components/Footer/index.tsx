@@ -1,14 +1,20 @@
 import React from 'react';
-import { FooterLayout, FooterCopyRightParagraph } from './Styles';
+import {
+  FooterLayout,
+  FooterCopyRightParagraph,
+  FooterContentsBox,
+} from './Styles';
 
 function Footer() {
   return (
     <FooterLayout>
-      <FooterCopyRightParagraph>
-        © JeongHyeon Park. All rights reserved.
-        <br />
-        Powered by Gatsby.
-      </FooterCopyRightParagraph>
+      <FooterContentsBox>
+        <FooterCopyRightParagraph>
+          © JeongHyeon Park. All rights reserved.
+          <br />
+          Powered by Gatsby.
+        </FooterCopyRightParagraph>
+      </FooterContentsBox>
     </FooterLayout>
   );
 }
