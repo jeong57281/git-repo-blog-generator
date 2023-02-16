@@ -7,7 +7,7 @@ export const FooterLayout = styled.footer`
 `;
 
 export const FooterContentsBox = styled.div`
-  padding: 4rem 8rem;
+  padding: 4rem 6rem;
 `;
 
 export const FooterCopyRightParagraph = styled.p`
