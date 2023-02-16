@@ -2,11 +2,18 @@ import React from 'react';
 import Header from '@components/Header';
 import { GlobalStyle } from './Styles';
 
-function Layout({ children }: { children: React.ReactNode }) {
+interface LayoutProps {
+  children: React.ReactNode;
+  pageContext: {
+    repoName: string;
+  };
+}
+
+function Layout({ children, pageContext }: LayoutProps) {
   return (
     <>
       <GlobalStyle />
-      <Header />
+      <Header repoName={pageContext.repoName} />
       {children}
     </>
   );
