@@ -20,13 +20,15 @@ const gatsbyCliPath = path.resolve(rootPath, 'node_modules', '.bin', 'gatsby');
 const gatsbyBuild = async () => {
   const cliCwd = await getCliCwd(CLI_PROCESS_NAME);
 
+  const repoName = getRepoName.sync(cliCwd);
+
   const buildCmd = spawn(gatsbyCliPath, ['build', '--prefix-paths'], {
     stdio: 'inherit',
     cwd: rootPath,
     env: {
       ...process.env,
-      PREFIX_PATHS: `/${getRepoName.sync(cliCwd)}`,
       CLI_CWD: cliCwd,
+      REPO_NAME: repoName,
     },
   });
 
@@ -38,9 +40,18 @@ const gatsbyBuild = async () => {
 };
 
 const gatsbyDevelop = async () => {
+  const cliCwd = await getCliCwd(CLI_PROCESS_NAME);
+
+  const repoName = getRepoName.sync(cliCwd);
+
   const devCmd = spawn(gatsbyCliPath, ['develop'], {
     stdio: 'inherit',
     cwd: rootPath,
+    env: {
+      ...process.env,
+      CLI_CWD: cliCwd,
+      REPO_NAME: repoName,
+    },
   });
 
   devCmd.on('error', (err: NodeJS.ErrnoException) => {

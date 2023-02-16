@@ -42,6 +42,13 @@ export const onPreInit = async ({ actions, store }: PreInitArgs) => {
     path: cliCwd,
   });
 
+  // 저장소 이름을 전역 컨텍스트로 공유하도록 플러그인 옵션 동적으로 수정
+  setPluginOptionsDynamically(actions, store, 'gatsby-plugin-global-context', {
+    context: {
+      repoName: process.env.REPO_NAME || '[저장소 이름]',
+    },
+  });
+
   // git이 추적하는 모든 파일의 생성/수정 정보를 가져와 저장
   if (!stamps) {
     stamps = new Map(

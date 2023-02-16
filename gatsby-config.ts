@@ -6,7 +6,7 @@ const config: GatsbyConfig = {
     sourceUrl: `https://github.com/gatsbyjs/gatsby/tree/master/examples/using-typescript`,
   },
 
-  pathPrefix: process.env.PREFIX_PATHS,
+  pathPrefix: `/${process.env.REPO_NAME}`,
 
   plugins: [
     {
@@ -33,6 +33,14 @@ const config: GatsbyConfig = {
       resolve: `gatsby-plugin-layout`,
       options: {
         component: `${__dirname}/src/components/Layout`,
+      },
+    },
+    {
+      resolve: `gatsby-plugin-global-context`,
+      options: {
+        context: {
+          repoName: '',
+        },
       },
     },
   ],
