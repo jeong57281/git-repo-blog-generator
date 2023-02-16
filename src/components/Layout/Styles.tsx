@@ -4,4 +4,8 @@ export const GlobalStyle = createGlobalStyle`
   :root {
     font-size: 16px;
   }
+
+  body {
+    margin: 0;
+  }
 `;

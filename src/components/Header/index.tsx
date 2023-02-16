@@ -14,7 +14,9 @@ function Header({ repoName }: HeaderProps) {
       <HeaderSideBox>
         <MenuButton isOpen={isMenuOpen} setIsOpen={setMenuOpen} />
       </HeaderSideBox>
+
       <HeaderParagraph>{repoName}</HeaderParagraph>
+
       <HeaderSideBox />
     </HeaderLayout>
   );
