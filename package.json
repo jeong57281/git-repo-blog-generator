@@ -22,6 +22,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "apexcharts": "^3.37.0",
     "chalk": "^4.1.2",
     "child_process": "^1.0.2",
     "find-process": "^1.4.7",
@@ -37,6 +38,7 @@
     "lodash": "^4.17.21",
     "pid-cwd": "^1.2.0",
     "react": "^18.2.0",
+    "react-apexcharts": "^1.4.0",
     "react-dom": "^18.2.0",
     "styled-components": "^5.3.6"
   },
