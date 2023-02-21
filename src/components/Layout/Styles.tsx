@@ -1,5 +1,5 @@
-import styled, { createGlobalStyle } from 'styled-components';
-import { color, size } from '@styles';
+import styled, { createGlobalStyle, css } from 'styled-components';
+import { color, size, mixin } from '@styles';
 
 export const GlobalStyle = createGlobalStyle`
   :root {
@@ -23,7 +23,7 @@ export const LayoutMainContentsBox = styled.div`
   max-width: 900px;
   margin: calc(${size.HEADER_HEIGHT} * 2) 0;
 
-  @media (max-width: ${size.BREAKPOINT_TABLET}) {
+  ${mixin.mobile(css`
     width: 95%;
-  }
+  `)}
 `;

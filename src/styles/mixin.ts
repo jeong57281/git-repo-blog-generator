@@ -1,9 +1,16 @@
-import { css } from 'styled-components';
+import { css, FlattenSimpleInterpolation } from 'styled-components';
+import { size } from '@styles';
 
 export const flexMiddle = css`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+export const mobile = (contents: FlattenSimpleInterpolation) => css`
+  @media (max-width: ${size.BREAKPOINT_TABLET}) {
+    ${contents}
+  }
 `;
 
 export const fadeOut = (duration = 1, delay = 0) => css`
