@@ -13,5 +13,4 @@ export const FooterContentsBox = styled.div`
 export const FooterCopyRightParagraph = styled.p`
   color: white;
   font-size: 0.75rem;
-  margin: 0;
 `;
