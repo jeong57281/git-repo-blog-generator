@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { color, size, mixin } from '@styles';
 
 export const HeaderLayout = styled.div`
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -12,6 +12,7 @@ export const HeaderLayout = styled.div`
   justify-content: space-between;
   align-items: center;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  z-index: ${size.HEADER_Z_INDEX};
 `;
 
 export const HeaderParagraph = styled.p`
