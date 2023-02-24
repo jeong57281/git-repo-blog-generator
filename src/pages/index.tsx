@@ -2,6 +2,7 @@ import * as React from 'react';
 import { graphql, PageProps } from 'gatsby';
 import DonutChart from '@components/DonutChart';
 import Card from '@components/Card';
+import HeatmapChart from '@components/HeatmapChart';
 import { ColumnBox, RowBox } from './index.style';
 
 interface IndexPageProps {
@@ -16,6 +17,11 @@ interface IndexPageProps {
       name: string;
       relativePath: string;
       ext: string;
+      fields: {
+        stampObject?: {
+          created: number;
+        };
+      };
     }[];
   };
   pageContext: any;
@@ -43,6 +49,22 @@ function Index({
   const labels = [...tmp.keys()];
   const series = [...tmp.values()];
 
+  const fileCreatedDates = new Map<string, number>();
+
+  allFile.nodes.forEach((value) => {
+    if (!value.fields.stampObject) {
+      return;
+    }
+
+    const date = new Date(value.fields.stampObject.created * 1000);
+
+    const key = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+
+    const count = fileCreatedDates.get(key);
+
+    fileCreatedDates.set(key, count ? count + 1 : 1);
+  });
+
   return (
     <main>
       <ColumnBox>
@@ -54,22 +76,22 @@ function Index({
             <div style={{ height: '50px' }} />
           </Card>
         </RowBox>
-        <RowBox>
-          <Card>
-            <div>
-              <h1>{site.siteMetadata.siteName}</h1>
-              <p className="custom-text">
-                This example is hosted on{' '}
-                <a href={site.siteMetadata.sourceUrl}>GitHub</a>. Continue
-                reading{' '}
-                <a href="https://www.gatsbyjs.com/docs/how-to/custom-configuration/typescript/">
-                  TypeScript and Gatsby documentation
-                </a>{' '}
-                to learn more.
-              </p>
-            </div>
-          </Card>
-        </RowBox>
+        <Card>
+          <HeatmapChart fileCreateDates={fileCreatedDates} />
+        </Card>
+        <Card>
+          <div>
+            <h1>{site.siteMetadata.siteName}</h1>
+            <p className="custom-text">
+              This example is hosted on{' '}
+              <a href={site.siteMetadata.sourceUrl}>GitHub</a>. Continue reading{' '}
+              <a href="https://www.gatsbyjs.com/docs/how-to/custom-configuration/typescript/">
+                TypeScript and Gatsby documentation
+              </a>{' '}
+              to learn more.
+            </p>
+          </div>
+        </Card>
       </ColumnBox>
     </main>
   );
@@ -90,6 +112,11 @@ export const pageQuery = graphql`
         name
         relativePath
         ext
+        fields {
+          stampObject {
+            created
+          }
+        }
       }
     }
   }
