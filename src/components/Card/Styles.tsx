@@ -12,6 +12,9 @@ export const CardLayout = styled.div<CardLayoutProps>`
   border-radius: 0.1875rem;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
   position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: flex-end;
 
   ${mixin.mobile(css`
     max-width: 100%;
