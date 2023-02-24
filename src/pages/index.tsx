@@ -2,9 +2,7 @@ import * as React from 'react';
 import { graphql, PageProps } from 'gatsby';
 import DonutChart from '@components/DonutChart';
 import Card from '@components/Card';
-
-import styled, { css } from 'styled-components';
-import { mixin } from '@styles';
+import { ColumnBox, RowBox } from './index.style';
 
 interface IndexPageProps {
   site: {
@@ -52,7 +50,9 @@ function Index({
           <Card title="언어 분포" maxWidth="33%">
             <DonutChart labels={labels} series={series} />
           </Card>
-          <Card title="활동량 그래프" maxWidth="66%"></Card>
+          <Card title="활동량 그래프" maxWidth="66%">
+            <div style={{ height: '50px' }} />
+          </Card>
         </RowBox>
         <RowBox>
           <Card>
@@ -93,24 +93,4 @@ export const pageQuery = graphql`
       }
     }
   }
-`;
-
-const ColumnBox = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
-  gap: 1rem;
-`;
-
-const RowBox = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  gap: 1rem;
-
-  ${mixin.mobile(css`
-    flex-direction: column;
-  `)}
 `;
