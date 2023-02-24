@@ -13,14 +13,14 @@ export const GlobalStyle = createGlobalStyle`
 
 export const LayoutMain = styled.main`
   min-height: 100vh;
-  background: ${color.BACKGROUND};
+  background: ${color.BASE};
   display: flex;
   justify-content: center;
 `;
 
 export const LayoutMainContentsBox = styled.div`
   width: 100%;
-  max-width: 900px;
+  max-width: ${size.CONTENTS_MAX_WIDTH};
   margin: calc(${size.HEADER_HEIGHT} * 2) 0;
 
   ${mixin.mobile(css`
