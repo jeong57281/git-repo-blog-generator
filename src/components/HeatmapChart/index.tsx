@@ -106,6 +106,29 @@ function HeatmapChart({ numberOfFilesCreatedOnDate }: HeatmapChartProps) {
             toolbar: {
               show: false,
             },
+            events: {
+              dataPointSelection: (e, chart, options) => {
+                try {
+                  const {
+                    w: {
+                      globals: { selectedDataPoints },
+                    },
+                    dataPointIndex,
+                  } = options;
+
+                  /**
+                   * 필터링 옵션을 저장하는 전역 상태를 업데이트 하는 코드가 추가 될 예정
+                   */
+                  const seriesIndex = selectedDataPoints.length - 1;
+                  const {
+                    meta: { count, date },
+                  } = series[seriesIndex].data[dataPointIndex];
+                  console.log(date);
+                } catch (err) {
+                  console.error(err);
+                }
+              },
+            },
           },
           dataLabels: {
             enabled: false,
