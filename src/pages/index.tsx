@@ -47,9 +47,10 @@ function Index({
   });
 
   const labels = [...tmp.keys()];
+
   const series = [...tmp.values()];
 
-  const fileCreatedDates = new Map<string, number>();
+  const numberOfFilesCreatedOnDate = new Map<string, number>();
 
   allFile.nodes.forEach((value) => {
     if (!value.fields.stampObject) {
@@ -57,12 +58,9 @@ function Index({
     }
 
     const date = new Date(value.fields.stampObject.created * 1000);
-
-    const key = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
-
-    const count = fileCreatedDates.get(key);
-
-    fileCreatedDates.set(key, count ? count + 1 : 1);
+    const key = date.toDateString();
+    const count = numberOfFilesCreatedOnDate.get(key);
+    numberOfFilesCreatedOnDate.set(key, count ? count + 1 : 1);
   });
 
   return (
@@ -77,7 +75,9 @@ function Index({
           </Card>
         </RowBox>
         <Card>
-          <HeatmapChart fileCreateDates={fileCreatedDates} />
+          <HeatmapChart
+            numberOfFilesCreatedOnDate={numberOfFilesCreatedOnDate}
+          />
         </Card>
         <Card>
           <div>

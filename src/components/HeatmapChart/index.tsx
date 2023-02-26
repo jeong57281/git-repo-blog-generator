@@ -3,7 +3,7 @@ import Chart from 'react-apexcharts';
 import { size, color } from '@styles';
 
 interface HeatmapChartProps {
-  fileCreateDates: Map<string, number>;
+  numberOfFilesCreatedOnDate: Map<string, number>;
 }
 
 interface HeatmapDataType {
@@ -33,7 +33,7 @@ const RANGE_SIZE = 5;
 const RANGE_COUNT = 4;
 const MAX_COUNT = RANGE_SIZE * RANGE_COUNT;
 
-function HeatmapChart({ fileCreateDates }: HeatmapChartProps) {
+function HeatmapChart({ numberOfFilesCreatedOnDate }: HeatmapChartProps) {
   const createSeries = useCallback((): HeatmapSeriesType[] => {
     const series: HeatmapSeriesType[] = Array.from(Array(7), (_, index) => ({
       name: DAY_OF_THE_WEEK[index],
@@ -55,8 +55,8 @@ function HeatmapChart({ fileCreateDates }: HeatmapChartProps) {
           continue;
         }
 
-        const key = `${prevNWeek.getFullYear()}-${prevNWeek.getMonth()}-${prevNWeek.getDate()}`;
-        const fileCount = fileCreateDates.get(key) || 0;
+        const fileCount =
+          numberOfFilesCreatedOnDate.get(prevNWeek.toDateString()) || 0;
 
         series[day].data.push({
           /**
@@ -76,7 +76,7 @@ function HeatmapChart({ fileCreateDates }: HeatmapChartProps) {
     series.reverse();
 
     return series;
-  }, [fileCreateDates]);
+  }, [numberOfFilesCreatedOnDate]);
 
   const series = createSeries();
 
