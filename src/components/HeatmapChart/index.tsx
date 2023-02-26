@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import Chart from 'react-apexcharts';
 import { size, color } from '@styles';
 
@@ -6,55 +6,92 @@ interface HeatmapChartProps {
   fileCreateDates: Map<string, number>;
 }
 
-const WEEK = Object.freeze(['토', '금', '목', '수', '화', '월', '일']);
-const PADDING = 5;
-const EMPTY = 2;
+interface HeatmapDataType {
+  x: string;
+  y: number;
+  meta: {
+    count: number;
+    date: Date;
+  };
+}
+
+interface HeatmapSeriesType {
+  name: string;
+  data: HeatmapDataType[];
+}
+
+const DAY_OF_THE_WEEK = Object.freeze([
+  '일',
+  '월',
+  '화',
+  '수',
+  '목',
+  '금',
+  '토',
+]);
+const RANGE_SIZE = 5;
+const RANGE_COUNT = 4;
+const MAX_COUNT = RANGE_SIZE * RANGE_COUNT;
 
 function HeatmapChart({ fileCreateDates }: HeatmapChartProps) {
-  let series: any = Array.from(Array(7), () => []);
+  const createSeries = useCallback((): HeatmapSeriesType[] => {
+    const series: HeatmapSeriesType[] = Array.from(Array(7), (_, index) => ({
+      name: DAY_OF_THE_WEEK[index],
+      data: [],
+    }));
 
-  const today = new Date();
+    const today = new Date();
+    const sundayOfThisWeek = today.getDate() - today.getDay();
 
-  for (let i = 0; i < 7; i += 1) {
-    const date = new Date();
+    for (let day = 0; day < 7; day += 1) {
+      const date = new Date();
+      date.setDate(sundayOfThisWeek + day);
 
-    date.setDate(today.getDate() + 7 - today.getDay() - i);
+      for (let j = Math.floor(365 / 7); j >= 0; j -= 1) {
+        const prevNWeek = new Date(date);
+        prevNWeek.setDate(prevNWeek.getDate() - 7 * j);
 
-    for (let j = 0; j < 365 / 7; j += 1) {
-      const prev7Date = new Date(date);
+        if (prevNWeek.getTime() > Date.now()) {
+          continue;
+        }
 
-      prev7Date.setDate(prev7Date.getDate() - 7 * j);
+        const key = `${prevNWeek.getFullYear()}-${prevNWeek.getMonth()}-${prevNWeek.getDate()}`;
+        const fileCount = fileCreateDates.get(key) || 0;
 
-      const key = `${prev7Date.getFullYear()}-${prev7Date.getMonth()}-${prev7Date.getDate()}`;
-
-      /**
-       * apexcharts 라이브러리의 heatmap은 데이터 값(y)이 0일 경우 cell이 투명하게 보이고, 1이상일 경우에만 색이 나타남.
-       * 중간에 구멍이 뚫린 것 같은 grid형태가 되지 않도록 데이터가 0일 경우에도 1이상의 값을 부여함.
-       * 또 값이 존재하는 cell의 경우 배경색과 뚜렷하게 구분되도록 패딩값을 더해줌.
-       */
-      const tmp = fileCreateDates.get(key);
-
-      const count = tmp ? tmp + PADDING : EMPTY;
-
-      if (prev7Date.getTime() > Date.now()) {
-        continue;
+        series[day].data.push({
+          /**
+           * x label이 보이기 위해서 정확히 몇개의 x값을 가진 항목이 열에 존재해야하는지는 정확히 모르겠음.
+           * 요일이 7개이므로 1일부터 7일까지 x값을 주었더니 일단은 제대로 작동함.
+           */
+          x: prevNWeek.getDate() <= 7 ? `${prevNWeek.getMonth() + 1}월` : '',
+          y: fileCount > MAX_COUNT ? MAX_COUNT : fileCount,
+          meta: {
+            count: fileCount,
+            date: prevNWeek,
+          },
+        });
       }
-
-      /**
-       * x label이 보이기 위해서 정확히 몇개의 x값을 가진 항목이 열에 존재해야하는지는 정확히 모르겠음.
-       * 요일이 7개이므로 1일부터 7일까지 x값을 주었더니 일단은 제대로 작동함.
-       */
-      series[i].push({
-        x: prev7Date.getDate() <= 7 ? `${prev7Date.getMonth() + 1}월` : '',
-        y: count,
-      });
     }
-  }
 
-  series = series.map((value, index) => ({
-    name: WEEK[index],
-    data: value.reverse(),
-  }));
+    series.reverse();
+
+    return series;
+  }, [fileCreateDates]);
+
+  const series = createSeries();
+
+  const heatmapRanges = Array(RANGE_COUNT)
+    .fill(null)
+    .map((_, index) => {
+      const times = index + 1;
+      const opacity = Math.floor((0xff / RANGE_COUNT) * times).toString(16);
+
+      return {
+        from: 1 + RANGE_SIZE * (times - 1),
+        to: RANGE_SIZE * times,
+        color: color.PRIMARY + opacity,
+      };
+    });
 
   return (
     <div>
@@ -73,22 +110,40 @@ function HeatmapChart({ fileCreateDates }: HeatmapChartProps) {
           dataLabels: {
             enabled: false,
           },
-          colors: [color.PRIMARY],
+          legend: {
+            show: false,
+          },
           plotOptions: {
             heatmap: {
-              shadeIntensity: 1,
+              enableShades: false,
               radius: 3,
+              colorScale: {
+                ranges: [
+                  {
+                    from: 0,
+                    to: 0,
+                    color: color.GRAPH_BG,
+                  },
+                  ...heatmapRanges,
+                ],
+              },
             },
           },
           grid: {
             show: false,
           },
           xaxis: {
+            axisTicks: {
+              show: false,
+            },
             labels: {
               rotate: 0,
             },
             tooltip: {
               enabled: false,
+            },
+            crosshairs: {
+              show: false,
             },
           },
           tooltip: {
@@ -96,13 +151,23 @@ function HeatmapChart({ fileCreateDates }: HeatmapChartProps) {
               show: false,
             },
             y: {
-              formatter: (value) => `${value - EMPTY}개`,
+              formatter: (_, { seriesIndex, dataPointIndex }) => {
+                if (series[seriesIndex] === undefined) {
+                  return '';
+                }
+
+                const { data } = series[seriesIndex];
+                const {
+                  meta: { count, date },
+                } = data[dataPointIndex];
+
+                return `${count}개 ${date.getFullYear()}년 ${
+                  date.getMonth() + 1
+                }월 ${date.getDate()}일 ${DAY_OF_THE_WEEK[date.getDay()]}요일`;
+              },
               title: {
                 formatter: () => '',
               },
-            },
-            z: {
-              title: 'hi',
             },
           },
         }}
