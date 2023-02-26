@@ -12,6 +12,7 @@
   "rules": {
     "prettier/prettier": 0,
 
+    "no-continue": "off",
     "no-use-before-define": "off",
 
     "react/jsx-uses-react": "off",
