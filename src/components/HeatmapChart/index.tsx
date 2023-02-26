@@ -175,11 +175,7 @@ function HeatmapChart({ numberOfFilesCreatedOnDate }: HeatmapChartProps) {
             },
             y: {
               formatter: (_, { seriesIndex, dataPointIndex }) => {
-                if (series[seriesIndex] === undefined) {
-                  return '';
-                }
-
-                const { data } = series[seriesIndex];
+                const { data } = series[seriesIndex] as HeatmapSeriesType;
                 const {
                   meta: { count, date },
                 } = data[dataPointIndex];
