@@ -1,6 +1,8 @@
 import React, { useCallback } from 'react';
-import Chart from 'react-apexcharts';
+import loadable from '@loadable/component';
 import { size, color } from '@styles';
+
+const LoadableChart = loadable(() => import('react-apexcharts'));
 
 interface HeatmapChartProps {
   numberOfFilesCreatedOnDate: Map<string, number>;
@@ -95,7 +97,7 @@ function HeatmapChart({ numberOfFilesCreatedOnDate }: HeatmapChartProps) {
 
   return (
     <div>
-      <Chart
+      <LoadableChart
         type="heatmap"
         options={{
           chart: {

@@ -1,6 +1,8 @@
 import React from 'react';
-import Chart from 'react-apexcharts';
+import loadable from '@loadable/component';
 import { DonutChartLayout } from './Styles';
+
+const LoadableChart = loadable(() => import('react-apexcharts'));
 
 interface DonutChartProps {
   labels: string[];
@@ -10,7 +12,7 @@ interface DonutChartProps {
 function DonutChart({ labels, series }: DonutChartProps) {
   return (
     <DonutChartLayout>
-      <Chart
+      <LoadableChart
         type="donut"
         series={series}
         options={{
