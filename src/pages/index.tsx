@@ -1,8 +1,12 @@
 import * as React from 'react';
 import { graphql, PageProps } from 'gatsby';
-import DonutChart from '@components/DonutChart';
+
 import Card from '@components/Card';
+
+import DonutChart from '@components/DonutChart';
 import HeatmapChart from '@components/HeatmapChart';
+import LineChart from '@components/LineChart';
+
 import styled, { css } from 'styled-components';
 import { mixin } from '@styles';
 
@@ -71,8 +75,10 @@ function Index({
           <Card title="언어 분포" maxWidth="33%">
             <DonutChart labels={labels} series={series} />
           </Card>
-          <Card title="활동량 그래프" maxWidth="66%">
-            <div style={{ height: '50px' }} />
+          <Card title="주간 활동량" maxWidth="66%">
+            <LineChart
+              numberOfFilesCreatedOnDate={numberOfFilesCreatedOnDate}
+            />
           </Card>
         </RowBox>
         <Card>
