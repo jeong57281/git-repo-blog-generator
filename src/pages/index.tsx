@@ -3,7 +3,8 @@ import { graphql, PageProps } from 'gatsby';
 import DonutChart from '@components/DonutChart';
 import Card from '@components/Card';
 import HeatmapChart from '@components/HeatmapChart';
-import { ColumnBox, RowBox } from './index.style';
+import styled, { css } from 'styled-components';
+import { mixin } from '@styles';
 
 interface IndexPageProps {
   site: {
@@ -120,4 +121,24 @@ export const pageQuery = graphql`
       }
     }
   }
+`;
+
+const ColumnBox = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  gap: 1rem;
+`;
+
+const RowBox = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 1rem;
+
+  ${mixin.mobile(css`
+    flex-direction: column;
+  `)}
 `;
