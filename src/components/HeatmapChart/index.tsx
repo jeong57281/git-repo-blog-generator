@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import loadable from '@loadable/component';
+import { DAY_OF_THE_WEEK } from '@constants';
 import { size, color } from '@styles';
 
 const LoadableChart = loadable(() => import('react-apexcharts'));
@@ -22,15 +23,6 @@ interface HeatmapSeriesType {
   data: HeatmapDataType[];
 }
 
-const DAY_OF_THE_WEEK = Object.freeze([
-  '일',
-  '월',
-  '화',
-  '수',
-  '목',
-  '금',
-  '토',
-]);
 const RANGE_SIZE = 5;
 const RANGE_COUNT = 4;
 const MAX_COUNT = RANGE_SIZE * RANGE_COUNT;
@@ -182,9 +174,11 @@ function HeatmapChart({ numberOfFilesCreatedOnDate }: HeatmapChartProps) {
                   meta: { count, date },
                 } = data[dataPointIndex];
 
-                return `${count}개 ${date.getFullYear()}년 ${
+                return `${date.getFullYear()}년 ${
                   date.getMonth() + 1
-                }월 ${date.getDate()}일 ${DAY_OF_THE_WEEK[date.getDay()]}요일`;
+                }월 ${date.getDate()}일 ${
+                  DAY_OF_THE_WEEK[date.getDay()]
+                }요일 : ${count}개`;
               },
               title: {
                 formatter: () => '',
