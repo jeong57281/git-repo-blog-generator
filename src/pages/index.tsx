@@ -55,7 +55,7 @@ function Index({
 
   const series = [...tmp.values()];
 
-  const numberOfFilesCreatedOnDate = new Map<string, number>();
+  const countOfDates = new Map<string, number>();
 
   allFile.nodes.forEach((value) => {
     if (!value.fields.stampObject) {
@@ -64,8 +64,8 @@ function Index({
 
     const date = new Date(value.fields.stampObject.created * 1000);
     const key = date.toDateString();
-    const count = numberOfFilesCreatedOnDate.get(key);
-    numberOfFilesCreatedOnDate.set(key, count ? count + 1 : 1);
+    const count = countOfDates.get(key);
+    countOfDates.set(key, count ? count + 1 : 1);
   });
 
   return (
@@ -76,15 +76,11 @@ function Index({
             <DonutChart labels={labels} series={series} />
           </Card>
           <Card title="주간 활동량" maxWidth="66%">
-            <LineChart
-              numberOfFilesCreatedOnDate={numberOfFilesCreatedOnDate}
-            />
+            <LineChart countOfDates={countOfDates} />
           </Card>
         </RowBox>
         <Card>
-          <HeatmapChart
-            numberOfFilesCreatedOnDate={numberOfFilesCreatedOnDate}
-          />
+          <HeatmapChart countOfDates={countOfDates} />
         </Card>
         <Card>
           <div>

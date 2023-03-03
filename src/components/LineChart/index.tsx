@@ -8,7 +8,7 @@ import { LineChartLayout } from './Style';
 const LoadableChart = loadable(() => import('react-apexcharts'));
 
 interface LineChartProps {
-  numberOfFilesCreatedOnDate: Map<string, number>;
+  countOfDates: Map<string, number>;
 }
 
 interface LineDataType {
@@ -20,7 +20,7 @@ interface LineSeriesType {
   data: LineDataType[];
 }
 
-function LineChart({ numberOfFilesCreatedOnDate }: LineChartProps) {
+function LineChart({ countOfDates }: LineChartProps) {
   const today = new Date();
 
   const series: LineSeriesType[] = [{ data: [] }];
@@ -30,7 +30,7 @@ function LineChart({ numberOfFilesCreatedOnDate }: LineChartProps) {
 
     series[0].data.push({
       x: prevDate.getTime(),
-      y: numberOfFilesCreatedOnDate.get(prevDate.toDateString()) || 0,
+      y: countOfDates.get(prevDate.toDateString()) || 0,
     });
   }
 
