@@ -3,27 +3,27 @@ import loadable from '@loadable/component';
 import { getRelativeDate } from '@utils/date';
 import { DAY_OF_THE_WEEK } from '@constants';
 import { color } from '@styles';
-import { LineChartLayout } from './Style';
+import { WeeklyActivityChartLayout } from './Style';
 
 const LoadableChart = loadable(() => import('react-apexcharts'));
 
-interface LineChartProps {
+interface WeeklyActivityChartProps {
   countOfDates: Map<string, number>;
 }
 
-interface LineDataType {
+interface LineChartDataType {
   x: number;
   y: number;
 }
 
-interface LineSeriesType {
-  data: LineDataType[];
+interface LineChartSeriesType {
+  data: LineChartDataType[];
 }
 
-function LineChart({ countOfDates }: LineChartProps) {
+function WeeklyActivityChart({ countOfDates }: WeeklyActivityChartProps) {
   const today = new Date();
 
-  const series: LineSeriesType[] = [{ data: [] }];
+  const series: LineChartSeriesType[] = [{ data: [] }];
 
   for (let i = 0; i < 7; i += 1) {
     const prevDate = getRelativeDate(-i, today);
@@ -35,7 +35,7 @@ function LineChart({ countOfDates }: LineChartProps) {
   }
 
   return (
-    <LineChartLayout>
+    <WeeklyActivityChartLayout>
       <LoadableChart
         type="line"
         width="100%"
@@ -43,7 +43,7 @@ function LineChart({ countOfDates }: LineChartProps) {
         series={series}
         options={{
           chart: {
-            id: 'activityLineChart',
+            id: 'activityWeeklyActivityChart',
             toolbar: {
               show: false,
               tools: {
@@ -118,7 +118,7 @@ function LineChart({ countOfDates }: LineChartProps) {
             },
             y: {
               formatter: (_, { seriesIndex, dataPointIndex }) => {
-                const { data } = series[seriesIndex] as LineSeriesType;
+                const { data } = series[seriesIndex] as LineChartSeriesType;
                 const { x, y } = data[dataPointIndex];
 
                 const date = new Date(x);
@@ -139,8 +139,8 @@ function LineChart({ countOfDates }: LineChartProps) {
           },
         }}
       />
-    </LineChartLayout>
+    </WeeklyActivityChartLayout>
   );
 }
 
-export default LineChart;
+export default WeeklyActivityChart;

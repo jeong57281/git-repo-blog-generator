@@ -5,7 +5,7 @@ import Card from '@components/Card';
 
 import DonutChart from '@components/DonutChart';
 import HeatmapChart from '@components/HeatmapChart';
-import LineChart from '@components/LineChart';
+import WeeklyActivityChart from '@components/WeeklyActivityChart';
 
 import styled, { css } from 'styled-components';
 import { mixin } from '@styles';
@@ -76,7 +76,7 @@ function Index({
             <DonutChart labels={labels} series={series} />
           </Card>
           <Card title="주간 활동량" maxWidth="66%">
-            <LineChart countOfDates={countOfDates} />
+            <WeeklyActivityChart countOfDates={countOfDates} />
           </Card>
         </RowBox>
         <Card>
