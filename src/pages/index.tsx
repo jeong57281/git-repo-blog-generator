@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { graphql, PageProps } from 'gatsby';
 
-import Card from '@components/Card';
+import Card from '@components/Shell/Card';
 
-import DonutChart from '@components/DonutChart';
-import HeatmapChart from '@components/HeatmapChart';
-import WeeklyActivityChart from '@components/WeeklyActivityChart';
+import DonutChart from '@components/Chart/DonutChart';
+import HeatmapChart from '@components/Chart/HeatmapChart';
+import WeeklyActivityChart from '@components/Chart/WeeklyActivityChart';
 
 import styled, { css } from 'styled-components';
 import { mixin } from '@styles';

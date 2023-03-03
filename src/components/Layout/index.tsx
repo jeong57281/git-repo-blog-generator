@@ -1,6 +1,6 @@
 import React from 'react';
-import Header from '@components/Header';
-import Footer from '@components/Footer';
+import Header from '@components/Layout/Header';
+import Footer from '@components/Layout/Footer';
 import { GlobalStyle, LayoutMain, LayoutMainContentsBox } from './Styles';
 
 interface LayoutProps {
