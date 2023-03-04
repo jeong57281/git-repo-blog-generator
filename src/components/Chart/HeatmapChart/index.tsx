@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import loadable from '@loadable/component';
 import { DAY_OF_THE_WEEK } from '@constants';
-import { size, color } from '@styles';
+import { color } from '@styles';
 
 const LoadableChart = loadable(() => import('react-apexcharts'));
 
@@ -186,7 +186,7 @@ function HeatmapChart({ countOfDates }: HeatmapChartProps) {
           },
         }}
         series={series}
-        width={size.CONTENTS_MAX_WIDTH}
+        width={884}
         height={180}
       />
     </div>

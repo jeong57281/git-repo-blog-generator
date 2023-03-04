@@ -7,8 +7,7 @@ import DonutChart from '@components/Chart/DonutChart';
 import HeatmapChart from '@components/Chart/HeatmapChart';
 import WeeklyActivityChart from '@components/Chart/WeeklyActivityChart';
 
-import styled, { css } from 'styled-components';
-import { mixin } from '@styles';
+import styled from 'styled-components';
 
 interface IndexPageProps {
   site: {
@@ -39,6 +38,9 @@ function Index({
   console.log('page context', pageContext);
   console.log('graph ql filesystem', allFile);
 
+  /**
+   * 확장자 파일 개수 count
+   */
   const tmp = new Map<string, number>();
 
   allFile.nodes.forEach(({ name, relativePath, ext }) => {
@@ -55,6 +57,9 @@ function Index({
 
   const series = [...tmp.values()];
 
+  /**
+   * 날짜별 파일 개수 count
+   */
   const countOfDates = new Map<string, number>();
 
   allFile.nodes.forEach((value) => {
@@ -70,15 +75,13 @@ function Index({
 
   return (
     <main>
-      <ColumnBox>
-        <RowBox>
-          <Card title="언어 분포" maxWidth="33%">
-            <DonutChart labels={labels} series={series} />
-          </Card>
-          <Card title="주간 활동량" maxWidth="66%">
-            <WeeklyActivityChart countOfDates={countOfDates} />
-          </Card>
-        </RowBox>
+      <ContentBox>
+        <Card title="언어 분포" maxWidth="33.3%">
+          <DonutChart labels={labels} series={series} />
+        </Card>
+        <Card title="주간 활동량" maxWidth="66.6%">
+          <WeeklyActivityChart countOfDates={countOfDates} />
+        </Card>
         <Card>
           <HeatmapChart countOfDates={countOfDates} />
         </Card>
@@ -95,7 +98,7 @@ function Index({
             </p>
           </div>
         </Card>
-      </ColumnBox>
+      </ContentBox>
     </main>
   );
 }
@@ -125,22 +128,10 @@ export const pageQuery = graphql`
   }
 `;
 
-const ColumnBox = styled.div`
+const ContentBox = styled.ul`
   width: 100%;
   display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
-  gap: 1rem;
-`;
-
-const RowBox = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  gap: 1rem;
-
-  ${mixin.mobile(css`
-    flex-direction: column;
-  `)}
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 0;
 `;

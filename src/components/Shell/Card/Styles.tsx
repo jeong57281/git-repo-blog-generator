@@ -5,20 +5,34 @@ interface CardLayoutProps {
   maxWidth: string;
 }
 
-export const CardLayout = styled.div<CardLayoutProps>`
+export const CardLayout = styled.li<CardLayoutProps>`
   width: 100%;
+
+  padding: 0.5rem;
+
+  list-style: none;
+
   max-width: ${({ maxWidth }) => maxWidth};
-  background-color: white;
-  border-radius: 0.1875rem;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  justify-content: flex-end;
 
   ${mixin.mobile(css`
     max-width: 100%;
   `)}
+`;
+
+export const CardContentBox = styled.div`
+  width: 100%;
+  height: 100%;
+
+  background-color: white;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
+  border-radius: 0.1875rem;
+
+  position: relative;
+
+  display: flex;
+  justify-content: flex-end;
+
+  overflow: hidden;
 `;
 
 export const CardTitleParagraph = styled.p`

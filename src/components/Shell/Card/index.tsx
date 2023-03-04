@@ -1,5 +1,5 @@
 import React from 'react';
-import { CardLayout, CardTitleParagraph } from './Styles';
+import { CardLayout, CardTitleParagraph, CardContentBox } from './Styles';
 
 interface CardProps {
   title?: string | undefined;
@@ -10,8 +10,10 @@ interface CardProps {
 function Card({ title, maxWidth = '100%', children }: CardProps) {
   return (
     <CardLayout maxWidth={maxWidth}>
-      {title && <CardTitleParagraph>{title}</CardTitleParagraph>}
-      {children}
+      <CardContentBox>
+        {title && <CardTitleParagraph>{title}</CardTitleParagraph>}
+        {children}
+      </CardContentBox>
     </CardLayout>
   );
 }
