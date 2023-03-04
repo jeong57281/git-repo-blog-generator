@@ -6,17 +6,16 @@ interface CardLayoutProps {
 }
 
 export const CardLayout = styled.li<CardLayoutProps>`
-  width: 100%;
-
   padding: 0.5rem;
-
   list-style: none;
 
+  width: 100%;
   max-width: ${({ maxWidth }) => maxWidth};
-
   ${mixin.mobile(css`
     max-width: 100%;
   `)}
+
+  transition: max-width 0.1s;
 `;
 
 export const CardContentBox = styled.div`
