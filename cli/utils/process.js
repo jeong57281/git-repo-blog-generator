@@ -7,7 +7,7 @@ exports.getCliCwd = exports.getCliPid = void 0;
 const find_process_1 = __importDefault(require("find-process"));
 const pid_cwd_1 = __importDefault(require("pid-cwd"));
 const path_1 = require("path");
-const constants_1 = require("../constants");
+const process_1 = require("../constants/process");
 const getCliPid = async (cliName, process) => {
     // 기저 사례
     if (!process) {
@@ -17,7 +17,7 @@ const getCliPid = async (cliName, process) => {
     if (!ppid) {
         return null;
     }
-    if (pid === constants_1.INIT_PROCESS_PID || pid === constants_1.SWAPPER_PROCESS_PID) {
+    if (pid === process_1.INIT_PROCESS_PID || pid === process_1.SWAPPER_PROCESS_PID) {
         return null;
     }
     if (cmd.indexOf(cliName) !== -1) {
