@@ -17,5 +17,11 @@
     "skipLibCheck": true
   },
 
-  "include": ["../src/bin", "../src/constants,", "../src/utils"]
+  "include": [
+    "../src/bin",
+    "../src/constants/error.ts",
+    "../src/constants/process.ts",
+    "../src/utils/process.ts",
+    "../src/utils/gatsby.ts"
+  ]
 }
