@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useMemo } from 'react';
 import Header from '@components/Layout/Header';
 import Footer from '@components/Layout/Footer';
 import { GlobalStyle, LayoutMain, LayoutMainContentsBox } from './Styles';
@@ -19,13 +19,16 @@ function Layout({ children, pageContext }: LayoutProps) {
     filterReducer.initialState
   );
 
+  const contextValue = useMemo(
+    () => ({
+      stateFilterReducer,
+      dispatchFilterReducer,
+    }),
+    []
+  );
+
   return (
-    <Context.Provider
-      value={{
-        stateFilterReducer,
-        dispatchFilterReducer,
-      }}
-    >
+    <Context.Provider value={contextValue}>
       <GlobalStyle />
       <Header repoName={pageContext.repoName} />
       <LayoutMain>
