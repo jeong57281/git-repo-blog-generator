@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import loadable from '@loadable/component';
-import { DAY_OF_THE_WEEK } from '@constants';
+import { DAY_OF_THE_WEEK } from '@constants/time';
 import { color } from '@styles';
 
 const LoadableChart = loadable(() => import('react-apexcharts'));

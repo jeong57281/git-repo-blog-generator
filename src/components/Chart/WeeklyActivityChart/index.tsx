@@ -1,7 +1,7 @@
 import React from 'react';
 import loadable from '@loadable/component';
 import { getRelativeDate } from '@utils/date';
-import { DAY_OF_THE_WEEK } from '@constants';
+import { DAY_OF_THE_WEEK } from '@constants/time';
 import { color } from '@styles';
 import { WeeklyActivityChartLayout } from './Style';
 

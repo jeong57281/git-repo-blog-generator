@@ -2,7 +2,7 @@ import find from 'find-process';
 import pidCwd from 'pid-cwd';
 import { join } from 'path';
 
-import { INIT_PROCESS_PID, SWAPPER_PROCESS_PID } from '../constants';
+import { INIT_PROCESS_PID, SWAPPER_PROCESS_PID } from '../constants/process';
 
 interface findProcessReturnType {
   pid: number;

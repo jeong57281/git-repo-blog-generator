@@ -4,12 +4,8 @@ import path from 'path';
 import { spawn } from 'child_process';
 import getRepoInfo from 'git-repo-info';
 
-import {
-  E_NO_GIT,
-  E_NO_GATSBY_CLI,
-  E_USAGE,
-  CLI_PROCESS_NAME,
-} from '../constants';
+import { E_NO_GIT, E_NO_GATSBY_CLI, E_USAGE } from '../constants/error';
+import { CLI_PROCESS_NAME } from '../constants/process';
 import { getCliCwd } from '../utils/process';
 
 const getRepoName = require('git-repo-name');

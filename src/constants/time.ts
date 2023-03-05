@@ -1,6 +1,3 @@
-export * from './error';
-export * from './process';
-
 export const DAY_OF_THE_WEEK = Object.freeze([
   '일',
   '월',

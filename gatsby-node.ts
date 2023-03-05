@@ -12,7 +12,7 @@ import type {
 import get from 'lodash/get';
 import { setPluginOptionsDynamically } from './src/utils/gatsby';
 import { getCliCwd } from './src/utils/process';
-import { CLI_PROCESS_NAME } from './src/constants';
+import { CLI_PROCESS_NAME } from './src/constants/process';
 
 let cliCwd: string | undefined = process.env.CLI_CWD;
 

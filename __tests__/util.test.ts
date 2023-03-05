@@ -1,6 +1,6 @@
 import find from 'find-process';
 import { getCliPid } from '../src/utils/process';
-import { CLI_PROCESS_NAME, TEST_PROCESS_NAME } from '../src/constants';
+import { CLI_PROCESS_NAME, TEST_PROCESS_NAME } from '../src/constants/process';
 
 test('CLI 프로세스를 찾을 수 없는 경우', async () => {
   const pList = await find('pid', process.pid);
