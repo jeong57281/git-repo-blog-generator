@@ -1,11 +1,11 @@
 import * as ACTION_TYPES from '../actions/actionsType';
 
-interface StateType {
+export interface StateType {
   ext: string | null;
   date: Date | null;
 }
 
-interface ActionType {
+export interface ActionType {
   type: ACTION_TYPES.UPDATE_FILTER;
   ext?: string;
   date?: Date;
