@@ -123,6 +123,13 @@ function HeatmapChart({ countOfDates }: HeatmapChartProps) {
               },
             },
           },
+          states: {
+            active: {
+              filter: {
+                type: 'none',
+              },
+            },
+          },
           dataLabels: {
             enabled: false,
           },

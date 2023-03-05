@@ -61,6 +61,13 @@ function DonutChart({ labels, series }: DonutChartProps) {
           dataLabels: {
             formatter: (value, { seriesIndex }) => labels[seriesIndex],
           },
+          states: {
+            active: {
+              filter: {
+                type: 'none',
+              },
+            },
+          },
         }}
       />
     </DonutChartLayout>
