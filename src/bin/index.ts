@@ -10,7 +10,7 @@ import {
   E_USAGE,
   CLI_PROCESS_NAME,
 } from '../constants';
-import { getCliCwd } from '../utils';
+import { getCliCwd } from '../utils/process';
 
 const getRepoName = require('git-repo-name');
 

@@ -10,7 +10,8 @@ import type {
   PreInitArgs,
 } from 'gatsby';
 import get from 'lodash/get';
-import { getCliCwd, setPluginOptionsDynamically } from './src/utils';
+import { setPluginOptionsDynamically } from './src/utils/gatsby';
+import { getCliCwd } from './src/utils/process';
 import { CLI_PROCESS_NAME } from './src/constants';
 
 let cliCwd: string | undefined = process.env.CLI_CWD;
