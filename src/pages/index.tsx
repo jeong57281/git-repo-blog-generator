@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { graphql, PageProps } from 'gatsby';
 
 import Card from '@components/Shell/Card';
@@ -55,10 +55,7 @@ function Index({ data: { allFile } }: PageProps<IndexPageProps>) {
     <main>
       <ContentBox>
         <Card title="언어 분포" maxWidth="33.3%">
-          <DonutChart
-            labels={[...countOfExts.keys()]}
-            series={[...countOfExts.values()]}
-          />
+          <DonutChart countOfExts={countOfExts} />
         </Card>
         <Card title="주간 활동량" maxWidth="66.6%">
           <WeeklyActivityChart countOfDates={countOfDates} />

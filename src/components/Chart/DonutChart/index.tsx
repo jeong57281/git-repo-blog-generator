@@ -5,11 +5,13 @@ import { DonutChartLayout } from './Styles';
 const LoadableChart = loadable(() => import('react-apexcharts'));
 
 interface DonutChartProps {
-  labels: string[];
-  series: number[];
+  countOfExts: Map<string, number>;
 }
 
-function DonutChart({ labels, series }: DonutChartProps) {
+function DonutChart({ countOfExts }: DonutChartProps) {
+  const labels = [...countOfExts.keys()];
+  const series = [...countOfExts.values()];
+
   return (
     <DonutChartLayout>
       <LoadableChart
