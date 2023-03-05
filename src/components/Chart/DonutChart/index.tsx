@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import loadable from '@loadable/component';
 import { DonutChartLayout } from './Styles';
+
+import * as ACTION_TYPES from '../../../store/actions/actionsType';
+import Context from '../../../contexts/context';
 
 const LoadableChart = loadable(() => import('react-apexcharts'));
 
@@ -9,6 +12,8 @@ interface DonutChartProps {
 }
 
 function DonutChart({ countOfExts }: DonutChartProps) {
+  const { dispatchFilterReducer } = useContext(Context);
+
   const labels = [...countOfExts.keys()];
   const series = [...countOfExts.values()];
 
@@ -25,17 +30,12 @@ function DonutChart({ countOfExts }: DonutChartProps) {
             events: {
               dataPointSelection: (e, chart, options) => {
                 try {
-                  const {
-                    w: {
-                      globals: { selectedDataPoints },
-                    },
-                    dataPointIndex,
-                  } = options;
+                  const { dataPointIndex } = options;
 
-                  /**
-                   * 필터링 옵션을 저장하는 전역 상태를 업데이트 하는 코드가 추가 될 예정
-                   */
-                  console.log(selectedDataPoints, dataPointIndex);
+                  dispatchFilterReducer({
+                    type: ACTION_TYPES.UPDATE_FILTER.CHANGE_EXT,
+                    ext: labels[dataPointIndex],
+                  });
                 } catch (err) {
                   console.error(err);
                 }
