@@ -17,6 +17,8 @@ function DonutChart({ countOfExts }: DonutChartProps) {
   const labels = [...countOfExts.keys()];
   const series = [...countOfExts.values()];
 
+  const sum = series.reduce((acc, cur) => acc + cur, 0);
+
   return (
     <DonutChartLayout>
       <LoadableChart
@@ -44,12 +46,7 @@ function DonutChart({ countOfExts }: DonutChartProps) {
           },
           tooltip: {
             y: {
-              formatter: (value) =>
-                `${
-                  Math.round(
-                    (value / series.reduce((acc, cur) => acc + cur, 0)) * 1000
-                  ) / 10
-                }%`,
+              formatter: (value) => `${Math.round((value / sum) * 1000) / 10}%`,
             },
           },
           plotOptions: {
