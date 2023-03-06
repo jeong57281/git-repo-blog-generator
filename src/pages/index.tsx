@@ -1,7 +1,7 @@
 import React, { useReducer } from 'react';
 import { graphql, PageProps } from 'gatsby';
 
-import Card from '@components/Shell/Card';
+import Card from '@components/Card';
 
 import DonutChart from '@components/Chart/DonutChart';
 import HeatmapChart from '@components/Chart/HeatmapChart';
