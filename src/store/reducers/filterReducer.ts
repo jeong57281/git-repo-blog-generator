@@ -16,7 +16,10 @@ export const initialState = {
   date: null,
 };
 
-export const reducer = (state: StateType, action: ActionType): StateType => {
+export const reducer = (
+  state: StateType = initialState,
+  action: ActionType
+): StateType => {
   switch (action.type) {
     case ACTION_TYPES.UPDATE_FILTER.CHANGE_DATE:
       if (!action.date || !(action.date instanceof Date)) {
