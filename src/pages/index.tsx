@@ -6,6 +6,7 @@ import Card from '@components/Card';
 import DonutChart from '@components/Chart/DonutChart';
 import HeatmapChart from '@components/Chart/HeatmapChart';
 import WeeklyActivityChart from '@components/Chart/WeeklyActivityChart';
+import SearchBar from '@components/SearchBar';
 
 import styled from 'styled-components';
 
@@ -67,6 +68,9 @@ function Index({ data: { allFile } }: PageProps<IndexPageProps>) {
         }}
       >
         <ContentBox>
+          <Card>
+            <SearchBar />
+          </Card>
           <Card title="언어 분포" maxWidth="33.3%">
             <DonutChart countOfExts={countOfExts} />
           </Card>
