@@ -111,6 +111,11 @@ function WeeklyActivityChart({ countOfDates }: WeeklyActivityChartProps) {
                 show: false,
               },
             },
+            xaxis: {
+              lines: {
+                show: true,
+              },
+            },
           },
           tooltip: {
             x: {
