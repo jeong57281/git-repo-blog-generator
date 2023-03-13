@@ -3,17 +3,20 @@ import * as ACTION_TYPES from '../actions/actionsType';
 export interface StateType {
   ext: string | null;
   date: Date | null;
+  keyword: string;
 }
 
 export interface ActionType {
   type: ACTION_TYPES.UPDATE_FILTER;
   ext?: string;
   date?: Date;
+  keyword?: string;
 }
 
 export const initialState = {
   ext: null,
   date: null,
+  keyword: '',
 };
 
 export const reducer = (
@@ -21,6 +24,8 @@ export const reducer = (
   action: ActionType
 ): StateType => {
   switch (action.type) {
+    case ACTION_TYPES.UPDATE_FILTER.CHANGE_KEYWORD:
+      return { ...state, keyword: action.keyword || '' };
     case ACTION_TYPES.UPDATE_FILTER.CHANGE_DATE:
       if (!action.date || !(action.date instanceof Date)) {
         return state;
